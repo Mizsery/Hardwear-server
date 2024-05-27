@@ -14,9 +14,9 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
   name     String
-  email    String    @unique
+  email    String @unique
   phone    String
   password String
   token    Token?
@@ -24,14 +24,13 @@ model User {
   wishlist Wishlist?
   cart     Cart?
   orders   Order[]
-  
 }
 
 model Token {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  user User @relation(fields: [userId], references: [id])
-  userId String @db.ObjectId @unique
-  refreshToken String @db.String
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  user         User?   @relation(fields: [userId], references: [id])
+  userId       String? @unique @db.ObjectId
+  refreshToken String
 }
 
 model Product {
@@ -46,14 +45,14 @@ model Product {
   wishlist   Wishlist @relation(fields: [wishlistId], references: [id])
   wishlistId String   @db.ObjectId
 
-  cart       Cart     @relation(fields: [cartId], references: [id])
-  cartId     String   @db.ObjectId
+  cart   Cart   @relation(fields: [cartId], references: [id])
+  cartId String @db.ObjectId
 
   category   Category? @relation(fields: [categoryId], references: [id])
   categoryId String?   @db.ObjectId
 
-  order      Order?    @relation(fields: [orderId], references: [id])
-  orderId    String?   @db.ObjectId
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @db.ObjectId
 }
 
 model Size {
@@ -84,7 +83,7 @@ model Cart {
 }
 
 model Order {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
   address Address?
 
   products Product[]
@@ -94,7 +93,7 @@ model Order {
 
 type Address {
   street String
-  city String
-  state String
-  zip String
+  city   String
+  state  String
+  zip    String
 }

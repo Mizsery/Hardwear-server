@@ -3,10 +3,12 @@ import cors from 'cors';
 import 'dotenv/config';
 import { router } from './routes';
 import cookieParser from 'cookie-parser';
+import { errorMiddleware } from './middleware';
 
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -17,6 +19,7 @@ app.use(
 );
 
 app.use('/api', router);
+app.use(errorMiddleware);
 
 app.get('/', (req, res) => {
   res.send('200');
