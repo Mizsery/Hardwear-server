@@ -77,12 +77,6 @@ class UserService {
   async logout({ refreshToken }: { refreshToken: Token['refreshToken'] }) {
     return await tokenService.removeToken(refreshToken);
   }
-
-  //! Delete users route
-  async getAllUsers() {
-    const users = await prisma.user.findMany();
-    return users;
-  }
 }
 
 export const userService = new UserService();

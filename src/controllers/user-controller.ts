@@ -65,16 +65,6 @@ class UserController {
       next(error);
     }
   }
-
-  //! Delete users route
-  async getUsers(req: Request, res: Response, next: NextFunction) {
-    try {
-      const users = await userService.getAllUsers();
-      return res.json(users);
-    } catch (error) {
-      next(error);
-    }
-  }
 }
 
 export const userController = new UserController();
