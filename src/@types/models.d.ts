@@ -4,3 +4,5 @@ declare type Product = import('@prisma/client').Product;
 declare type ProductInWishlist = import('@prisma/client').ProductInWishlist;
 declare type TypeProduct = import('@prisma/client').TypeProduct;
 declare type ProductInCart = import('@prisma/client').ProductInCart;
+declare type ProductInOder = import('@prisma/client').ProductInOder;
+declare type Order = import('@prisma/client').Order;

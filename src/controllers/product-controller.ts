@@ -24,13 +24,32 @@ class ProductController {
         where: { products: { some: { typeProduct: type } } },
         select: { category: true, id: true }
       });
+
       res.json({ products, categories });
     } catch (error) {
       next(error);
     }
   }
 
-  async getProductsByCategory(req: any, res: Response, next: NextFunction) {
+  async getProductById(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+
+    try {
+      const product = await prisma.product.findFirst({
+        where: { id: id },
+        include: {
+          sizes: { select: { id: true, size: true } },
+          category: true
+        }
+      });
+
+      res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getProductsByCategory(req: Request | any, res: Response, next: NextFunction) {
     const { category } = req.params;
     const { type } = req.query;
 
@@ -39,7 +58,7 @@ class ProductController {
         where: { categoryId: category },
         include: {
           category: true,
-          sizes: true
+          sizes: { select: { id: true, size: true } }
         }
       });
 
@@ -49,25 +68,6 @@ class ProductController {
       });
 
       res.json({ products, categories });
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async getProductById(req: any, res: Response, next: NextFunction) {
-    const { id } = req.params;
-
-    try {
-      const product = await prisma.product.findFirst({
-        where: { id: id },
-        include: {
-          sizes: true,
-          category: true,
-          productInWishlist: true
-        }
-      });
-
-      res.json(product);
     } catch (error) {
       next(error);
     }

@@ -1,9 +1,27 @@
 import { NextFunction, Request, Response } from 'express';
 import { prisma } from '../prisma';
-import { ApiError } from '../exception';
 
 class CartController {
-  async productToCart(req: Request | any, res: Response, next: NextFunction) {
+  async getProductsInCart(req: Request, res: Response, next: NextFunction) {
+    const userId = req.user.id;
+
+    if (!userId) {
+      return res.status(400).json({ error: 'Продукта не существует' });
+    }
+
+    try {
+      const cart = await prisma.productInCart.findMany({
+        where: { userId },
+        include: { product: { select: { id: true, name: true, image: true, price: true } } }
+      });
+
+      return res.json(cart);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async productToCart(req: Request, res: Response, next: NextFunction) {
     const { productId, size } = req.body;
     const userId = req.user.id;
 
@@ -21,11 +39,13 @@ class CartController {
           where: { userId, productId, id: existingProduct.id },
           data: { quantity: { increment: 1 } }
         });
+
         res.json(cart);
       } else {
         const cart = await prisma.productInCart.create({
           data: { userId, productId, size, quantity: 1 }
         });
+
         res.json(cart);
       }
     } catch (error) {
@@ -33,7 +53,7 @@ class CartController {
     }
   }
 
-  async deleteProductInCart(req: Request | any, res: Response, next: NextFunction) {
+  async deleteProductInCart(req: Request, res: Response, next: NextFunction) {
     const { productId, size } = req.body;
     const { typeDelete } = req.query;
     const userId = req.user.id;
@@ -61,25 +81,6 @@ class CartController {
           res.json(wishlist);
         }
       }
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async getProductsInCart(req: Request | any, res: Response, next: NextFunction) {
-    const userId = req.user.id;
-
-    if (!userId) {
-      return res.status(400).json({ error: 'Продукта не существует' });
-    }
-
-    try {
-      const cart = await prisma.productInCart.findMany({
-        where: { userId },
-        include: { product: true }
-      });
-
-      return res.json(cart);
     } catch (error) {
       next(error);
     }
