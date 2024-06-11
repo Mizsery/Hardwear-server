@@ -2,11 +2,11 @@
   "name": "hardwear-server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "npx tsc",
-    "start": "node dist/index.js"
+    "seed-prisma": "npx prisma db push --force-reset && npx prisma db seed",
+    "start": " npm run build && npm run seed-prisma && node dist/index.js "
   },
   "keywords": [],
   "author": "",
