@@ -1,29 +1,25 @@
-# Hardwear store rest api
+# Hardwear store react app
 
 ### Stack
 ***
 
-- **MongoDB**
-- **Prisma**
-- **Express**
-- **TypeScript**
-- **JWT**
+- **RTK**
+- **React-router-dom**
+- **React-hook-form with zod**
+- **Shadcn/UI and tailwind**
 ### Installation
 ***
 
-1. Clone repository [HardWear server](https://github.com/Mizsery/Hardwear-server)
+1. Clone repository [HardWear client](https://github.com/Mizsery/Hardwear-client) 
 
 ```
 git clone https://github.com/Mizsery/Hardwear-server
 ```
 
-2.  Create ``.env`` file, set environment variables:
+2.  Install packages:
 
-```env
-PORT = 
-JWT_ACCESS_KEY =
-JWT_REFRESH_KEY = 
-DATABSE_URL = 
+```bash
+npm i
 ```
 
 3. Clone repository with frontend [HardWear client](https://github.com/Mizsery/Hardwear-client) 
@@ -32,10 +28,16 @@ DATABSE_URL =
 git clone https://github.com/Mizsery/Hardwear-client
 ```
 
-4. Run docker compose
+4. Install packages in both folders
+
+```bash
+npm i
+```
+
+5. Run docker compose
 
 ```
 docker compose up -d
 ```
 
-5. Open browser at the link http:/localhost:80
+6. Open browser at the link http:/localhost:80
