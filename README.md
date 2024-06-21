@@ -3,10 +3,9 @@
 ### Stack
 ***
 
-- **RTK**
-- **React-router-dom**
-- **React-hook-form with zod**
-- **Shadcn/UI and tailwind**
+- **Express**
+- **Primsa**
+- **JWT**
 ### Installation
 ***
 
